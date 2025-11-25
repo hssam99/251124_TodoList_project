@@ -1,0 +1,708 @@
+/* 아무 공백 한 줄 추가 */
+
+@import "tailwindcss";
+
+:root {
+  --background: #f7f7f7;
+  --foreground: #171717;
+
+  -webkit-appearance: none;
+  appearance: none;
+  /* --font-geist-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-geist-mono: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.btn {
+  padding: 10px 20px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.isOpen {
+  position: absolute;
+  display: flex;
+  padding: 8px;
+  background: white;
+  border: 1px solid #cbd5f5;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.home-page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 40px 16px 80px;
+  position: relative;
+}
+
+
+/* =========================
+   보드 리스트 섹션
+   ========================= */
+
+/* 전체 컨테이너 */
+.board-container {
+  max-width: 980px;
+  margin: 40px auto 0 auto;
+  width: 100%;
+}
+
+/* 섹션 타이틀 */
+.board-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1f1f1f;
+}
+
+/* 그리드 레이아웃 */
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+/* 개별 카드 버튼 */
+.board-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 18px 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.board-card:hover {
+  border-color: #3b82f6;
+  /* 파랑 */
+  background: rgba(230, 242, 255, 0.85);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* 아이콘 박스 */
+.card-icon-box {
+  /* border-radius: 14px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+}
+
+/* 아이콘 자체 */
+.card-icon {
+  height: 70px;
+}
+
+/* 텍스트 전체 묶음 */
+.card-text {
+  text-align: center;
+}
+
+/* 날짜 텍스트 */
+.card-date {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 2px;
+}
+
+/* 타이틀 텍스트 (두 줄 말줄임) */
+.card-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1f1f1f;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* 최대 2줄 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 리스트가 비었을 때 문구 */
+.empty-text {
+  margin-top: 40px;
+
+  font-size: 30px;
+  color: #cbd5f5;
+  padding: 8px;
+
+  text-align: center;
+}
+
+
+/* ==============================
+   투두리스트 상세페이지 TodoList.tsx
+   ============================== */
+
+/* 페이지 전체 */
+.todo-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 16px 80px;
+}
+
+/* 카드 컨테이너 */
+.todo-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 24px 20px 20px;
+
+}
+
+/* 헤더 */
+.todo-card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.todo-card-header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.todo-card-header-right {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #cbd5f5;
+}
+
+.todo-card-header-icons svg {
+  color: #cbd5f5;
+  cursor: pointer;
+}
+
+.todo-card-date {
+  font-size: 18px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.todo-card-date-input {
+  /* font-size: 16px; */
+  border: none;
+  outline: none;
+  color: #cbd5f5;
+}
+
+.todo-card-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1f1f1f;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+.todo-card-title-input {
+  /* font-size: 24px; */
+  font-weight: 800;
+  border: none;
+  outline: none;
+  color: #cbd5f5;
+}
+
+.todo-card-count {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+  color: #0070f3;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background-color: rgba(230, 242, 255, 0.85);
+}
+
+
+/* --------------------------- 목록 헤더 --------------------------- */
+
+/* 목록 컬럼 헤더 */
+.todo-list-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  text-transform: uppercase;
+  /* letter-spacing: 0.12em; */
+  color: #cbd5f5;
+  margin-bottom: 10px;
+  padding: 0 8px;
+}
+
+.todo-list-header-left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.todo-list-header-right {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.todo-list-header-icons svg {
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.todo-list-header-sort-icon svg {
+  width: 24px;
+  height: auto;
+}
+
+.todo-list-header-name {
+  flex: 1;
+}
+
+.todo-list-header-sort,
+.todo-list-header-filter {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+/* --------------------------- 입력 줄 --------------------------- */
+.todo-input-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 12px;
+  margin-bottom: 8px;
+}
+
+.todo-input {
+  flex: 1;
+  height: 40px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  border: 1px solid #cbd5f5;
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+}
+
+.todo-input::placeholder {
+  color: #cbd5f5;
+}
+
+.name-input {
+  flex: 1;
+}
+
+.due-date-input,
+.due-time-input {
+  flex: 0 0 auto;
+  min-width: 80px;
+}
+
+.is-important-input {
+  flex: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.important {
+  border: 1px solid #f59e0b;
+}
+
+.bi-star {
+  color: #cbd5f5
+}
+
+.bi-star-fill {
+  color: #f59e0b;
+  /* 노랑 계열 */
+}
+
+.todo-input-submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #0070f3;
+}
+
+/* --------------------------- 투두리스트 래퍼 --------------------------- */
+.todo-list-section {
+  margin-top: 4px;
+}
+
+.todo-empty-text {
+  font-size: 18px;
+  color: #cbd5f5;
+  padding: 8px;
+
+  text-align: center;
+}
+
+/* 리스트 */
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* --------------------------- todo row 개별 아이템 --------------------------- */
+.todo-item-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 8px;
+  border-bottom: 1px solid #cbd5f5;
+  border-left: 8px solid transparent;
+  /* 컬러바 */
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+/* 동그라미 (is_done: false) */
+.todo-status-circle {
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #cbd5f5;
+}
+
+/* 동그라미 선 굵기 조절 */
+.todo-status-circle svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.6;
+}
+
+/* 동그라미 (is_done: true) */
+.todo-status-circle.checked svg {
+  color: #0070f3;
+}
+
+
+/* --------------- todo row 메인(태그 + 이름) --------------- */
+/* ----------- 수정 부분 ----------- */
+.todo-edit-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.todo-edit-tags-area {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 85px;
+}
+
+.todo-edit-due {
+  display: flex;
+  align-items: center;
+  /* gap: 4px; */
+}
+
+.todo-edit-due-date-input,
+.todo-edit-due-time-input {
+  padding: 0 8px;
+  font-size: 12px;
+  color: #cbd5f5;
+}
+
+/* Safari에서 date/time 텍스트 부분 색상 강제 */
+.todo-edit-due input[type="date"]::-webkit-date-and-time-value,
+.todo-edit-due input[type="time"]::-webkit-date-and-time-value {
+  -webkit-appearance: none;
+  appearance: none;
+  color: #cbd5f5;
+}
+
+.todo-item-name-input {
+  margin: 0;
+  padding: 0;
+  width: 300px;
+  height: 32px;
+  border-radius: 6px;
+  padding: 0 8px;
+  font-size: 14px;
+  color: #cbd5f5;
+}
+
+/* 공통 태그 */
+.todo-tag {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: #e5e5e5;
+  background-color: #f7f7f7;
+  cursor: pointer;
+}
+
+.todo-important-tag.active {
+  color: #f59e0b;
+  background-color: #ffe6d7;
+}
+
+.todo-in-progress-tag.active {
+  color: #4CB3FF;
+  background-color: #E7F5FF;
+}
+
+.todo-item-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.todo-item-name {
+  font-size: 14px;
+  color: #374151;
+}
+
+.todo-item-main-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.todo-item-due-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  cursor: pointer;
+}
+
+.todo-item-due {
+  font-size: 12px;
+  color: #777;
+}
+
+.dday-tag-area {
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* D-day 태그 공통 스타일 */
+.dday-tag {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* 지난 날짜 (D+) → 회색 */
+.dday-past {
+  color: #6b7280;
+  background-color: #e5e7eb;
+}
+
+/* 남은 날짜 (D-) → 초록 */
+.dday-future {
+  color: #0f9d58;
+  background-color: #e0f4e9;
+}
+
+/* 오늘 (D-day) → 빨강 */
+.dday-dday {
+  color: #e11d48;
+  background-color: #ffe3e6;
+}
+
+/* 오른쪽 메뉴 버튼 */
+.todo-item-right {
+  display: flex;
+}
+
+.todo-item-more-btn {
+  position: relative;
+  background: none;
+  border: none;
+  color: #cbd5f5;
+  cursor: pointer;
+}
+
+
+.isOpen-more-list-left {
+  flex-direction: column;
+  top: 100%;
+  right: 0;
+  min-width: 100px;
+  font-size: 13px;
+  color: #777;
+  border-color: #e5e5e5;
+  gap: 12px;
+}
+
+.isOpen-more-list-right {
+  flex-direction: column;
+  top: 100%;
+  left: 0;
+  min-width: 100px;
+  font-size: 13px;
+  color: #777;
+  border-color: #e5e5e5;
+  gap: 12px;
+}
+
+.more-sort-list {
+  min-width: 80px;
+}
+
+/* -------------------------------- 필터 팝업 메뉴 -------------------------------- */
+
+.more-filter-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  min-width: 100px;
+  gap: 8px;
+}
+
+.filter-items {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* 진짜 체크박스: 화면에서는 숨기기 */
+.filter-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 가짜 체크박스 UI */
+.filter-checkbox-ui {
+  display: inline-block;      /* span을 박스로 만든다 */
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid #cbd5f5;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* 체크됐을 때 */
+.filter-checkbox:checked + .filter-checkbox-ui {
+  background-color: #cbd5f5;
+  /* border-color: #cbd5f5; */
+}
+
+.isOpen-more-Btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 2px 2px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.isOpen-more-Btn svg {
+  width: 14px;
+  height: auto;
+}
+
+/* 완료된 항목 */
+.todo-done .todo-item-name {
+  text-decoration: line-through;
+  color: #cbd5f5;
+}
+
+/* --------------------------- 색상 선택기 --------------------------- */
+.color-picker {
+  position: relative;
+  display: inline-block;
+}
+
+.isOpen-color-list {
+  top: 90%;
+  left: 0px;
+  gap: 8px;
+}
+
+.color-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.color-dot-filter {
+  width: 13px;
+  height: 13px;
+}
+
+.color-dot.selected {
+  border-color: #0070f3;
+}
+
+/* transparent 스타일 */
+.color-dot.no-color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent !important;
+  border: 1px solid #cbd5f5;
+  position: relative;
+  overflow: hidden;
+}
+
+/* X 표시 */
+.color-dot.no-color svg {
+  width: 19px;
+  height: 19px;
+  pointer-events: none;
+  /* 클릭은 버튼으로 전달 */
+  color: #cbd5f5;
+}
