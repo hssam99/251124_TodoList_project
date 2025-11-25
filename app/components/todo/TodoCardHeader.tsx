@@ -4,7 +4,7 @@ import { useState, useRef, KeyboardEvent } from "react";
 import axios from "axios";
 import { BoardType } from "@/app/type/boardType";
 import { TodoType } from "@/app/type/todoType";
-import formatDateYYYYMMDD from "@/lib/utils/formatDateYYYY-MM-DD";
+import formatDateYYYYMMDD from "@/lib/utils/utils";
 import useOutsideClick from "@/app/hooks/useOutsideClick";
 import { useRouter as userRouter } from "next/navigation";
 

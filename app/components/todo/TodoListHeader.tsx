@@ -15,7 +15,7 @@ type TodoListHeaderProps = {
     setFilterSet: React.Dispatch<React.SetStateAction<Set<FilterType>>>;
 };
 
-export default function TodoListHeader({ onUpdated, sortType, setSortType, filterSet, setFilterSet }: TodoListHeaderProps) {
+export default function TodoListHeader({ sortType, setSortType, filterSet, setFilterSet }: TodoListHeaderProps) {
 
     // 정렬 (기본, 중요도 순, 최신 순)
     const [isSortOpen, setIsSortOpen] = useState(false);

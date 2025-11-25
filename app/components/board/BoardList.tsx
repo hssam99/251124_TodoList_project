@@ -1,6 +1,6 @@
 "use client";
 
-import formatDateYYYYMMDD from '@/lib/utils/formatDateYYYY-MM-DD';
+import formatDateYYYYMMDD from '@/lib/utils/utils';
 import { BoardType } from '../../type/boardType';
 import { useRouter as userRouter } from 'next/navigation';
 
